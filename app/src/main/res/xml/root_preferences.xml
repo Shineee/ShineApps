@@ -1,0 +1,9 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        app:iconSpaceReserved="false"
+        app:key="showFile"
+        app:summary="显示以&#34;.&#34;开头的文件和文件夹"
+        app:title="@string/hide_file_title" />
+
+</PreferenceScreen>
