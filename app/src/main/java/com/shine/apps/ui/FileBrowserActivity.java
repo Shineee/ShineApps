@@ -13,8 +13,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.Permission;
@@ -23,6 +25,8 @@ import com.shine.apps.R;
 import com.shine.apps.adapter.FileListAdapter;
 import com.shine.apps.consts.FileConst;
 import com.shine.apps.utils.ExternalFileUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.List;
@@ -33,7 +37,7 @@ import java.util.List;
 public class FileBrowserActivity extends AppCompatActivity {
     private static final String TAG = "FileBrowserActivity";
     //文件列表控件
-    private ListView lvFileList;
+    private RecyclerView rvFileList;
     private FileListAdapter mFileListAdapter;
 
     private List<File> mFileList;
@@ -56,15 +60,8 @@ public class FileBrowserActivity extends AppCompatActivity {
      * 初始化控件
      */
     private void initView() {
-        lvFileList = findViewById(R.id.lvFileList);
-        lvFileList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                File file = mFileListAdapter.getItem(position);
-                mFileListAdapter.onItemClick(file);
-            }
-        });
-        registerForContextMenu(lvFileList);
+        rvFileList = findViewById(R.id.rvFileList);
+        registerForContextMenu(rvFileList);
     }
 
     /**
@@ -75,7 +72,7 @@ public class FileBrowserActivity extends AppCompatActivity {
         mFileList = externalFileUtils.getExternalPathList();
         //绑定文件列表数据
         mFileListAdapter = new FileListAdapter(this, getSupportActionBar());
-        lvFileList.setAdapter(mFileListAdapter);
+        rvFileList.setAdapter(mFileListAdapter);
         mFileListAdapter.setFileList(mFileList);
     }
 
@@ -148,7 +145,7 @@ public class FileBrowserActivity extends AppCompatActivity {
         ContextMenu.ContextMenuInfo cmi = item.getMenuInfo();
         AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) cmi;
         int position = acmi.position;
-        File file = mFileListAdapter.getItem(position);
+        File file = mFileList.get(position);
         switch (item.getItemId()) {
             case 2://Menu.FIRST + 1，编辑
                 showEditDirDialog(file);

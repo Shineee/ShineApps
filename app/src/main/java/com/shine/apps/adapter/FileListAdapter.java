@@ -10,17 +10,20 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.shine.apps.R;
 import com.shine.apps.utils.L;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -39,7 +42,7 @@ import java.util.List;
  * @modified 3/21/21
  * @since 3/21/21
  */
-public class FileListAdapter extends BaseAdapter {
+public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.ViewHolder> {
     private static final String TAG = "FileListAdapter";
     private Context mContext;
     private List<File> mFileList;
@@ -65,39 +68,19 @@ public class FileListAdapter extends BaseAdapter {
         mFileList = fileList;
     }
 
-
+    @NonNull
+    @NotNull
     @Override
-    public int getCount() {
-        return mFileList != null ? mFileList.size() : 0;
+    public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_file, parent, false);
+        ViewHolder holder = new ViewHolder(view);
+        return holder;
     }
 
     @Override
-    public File getItem(int position) {
-        return mFileList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_file, null);
-            viewHolder = new ViewHolder();
-            viewHolder.tvFileName = convertView.findViewById(R.id.tvFileName);
-            viewHolder.tvFileDesc = convertView.findViewById(R.id.tvFileDesc);
-            viewHolder.imgIcon = convertView.findViewById(R.id.imgIcon);
-            viewHolder.rlItem = convertView.findViewById(R.id.rlItem);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
-
+    public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         File file = mFileList.get(position);
-        viewHolder.tvFileName.setText(file.getName());
+        holder.tvFileName.setText(file.getName());
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String modified = sdf.format(file.lastModified());
@@ -106,14 +89,29 @@ public class FileListAdapter extends BaseAdapter {
 
         if (file.isDirectory()) {
             desc = modified;//2021/03/39 07:08:09
-            viewHolder.imgIcon.setImageResource(R.mipmap.file_list);
+            holder.imgIcon.setImageResource(R.mipmap.file_list);
         } else {
             desc = modified + " - " + length;//2021/03/39 07:08:09 - 2.34KB
-            viewHolder.imgIcon.setImageResource(R.mipmap.file);
+            holder.imgIcon.setImageResource(R.mipmap.file);
         }
 
-        viewHolder.tvFileDesc.setText(desc);
-        return convertView;
+        holder.tvFileDesc.setText(desc);
+        holder.rlItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClick(file);
+            }
+        });
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    @Override
+    public int getItemCount() {
+        return mFileList != null ? mFileList.size() : 0;
     }
 
     public void onItemClick(File file) {
@@ -326,11 +324,19 @@ public class FileListAdapter extends BaseAdapter {
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
-    private class ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvFileName;
         TextView tvFileDesc;
         ImageView imgIcon;
         RelativeLayout rlItem;
-    }
 
+        public ViewHolder(View view) {
+            super(view);
+            tvFileName = view.findViewById(R.id.tvFileName);
+            tvFileDesc = view.findViewById(R.id.tvFileDesc);
+            imgIcon = view.findViewById(R.id.imgIcon);
+            rlItem = view.findViewById(R.id.rlItem);
+        }
+
+    }
 }
