@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hjq.permissions.OnPermissionCallback;
@@ -51,6 +52,8 @@ public class FileMoveActivity extends AppCompatActivity {
      */
     private void initView() {
         rvFileList = findViewById(R.id.rvFileList);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        rvFileList.setLayoutManager(llm);
         registerForContextMenu(rvFileList);
     }
 
