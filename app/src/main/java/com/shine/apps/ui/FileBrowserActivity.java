@@ -10,10 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,8 +23,6 @@ import com.shine.apps.R;
 import com.shine.apps.adapter.FileListAdapter;
 import com.shine.apps.consts.FileConst;
 import com.shine.apps.utils.ExternalFileUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.List;

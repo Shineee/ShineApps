@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.Permission;
@@ -32,7 +33,7 @@ import java.util.List;
 public class FileMoveActivity extends AppCompatActivity {
     private static final String TAG = "MoveFileActivity";
     //文件列表控件
-    private ListView lvFileList;
+    private RecyclerView rvFileList;
     private FolderListAdapter mFolderListAdapter;
     private List<File> mFileList;
 
@@ -49,15 +50,8 @@ public class FileMoveActivity extends AppCompatActivity {
      * 初始化控件
      */
     private void initView() {
-        lvFileList = findViewById(R.id.lvFileList);
-        lvFileList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                File file = mFolderListAdapter.getItem(position);
-                mFolderListAdapter.onItemClick(file);
-            }
-        });
-        registerForContextMenu(lvFileList);
+        rvFileList = findViewById(R.id.rvFileList);
+        registerForContextMenu(rvFileList);
     }
 
     /**
@@ -68,7 +62,7 @@ public class FileMoveActivity extends AppCompatActivity {
         mFileList = externalFileUtils.getExternalFolderPathList();
         //绑定文件列表数据
         mFolderListAdapter = new FolderListAdapter(this, getSupportActionBar());
-        lvFileList.setAdapter(mFolderListAdapter);
+        rvFileList.setAdapter(mFolderListAdapter);
         mFolderListAdapter.setFileList(mFileList);
     }
 
