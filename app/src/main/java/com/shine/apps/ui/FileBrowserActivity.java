@@ -61,6 +61,7 @@ public class FileBrowserActivity extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         rvFileList.setLayoutManager(llm);
         registerForContextMenu(rvFileList);
+
     }
 
     /**

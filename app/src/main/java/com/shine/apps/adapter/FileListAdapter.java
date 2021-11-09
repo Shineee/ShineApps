@@ -7,9 +7,11 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,10 +48,12 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.ViewHo
     private static final String TAG = "FileListAdapter";
     private Context mContext;
     private List<File> mFileList;
+    private SparseIntArray mCheckArray = new SparseIntArray();
     private File mParentFile;
     private File mCurrentFile;
     private ActionBar mActionBar;
     private Handler mHandler = new Handler(Looper.getMainLooper());
+    private boolean isEditMode = false;
 
     public FileListAdapter(Context context, ActionBar actionBar) {
         mContext = context;
@@ -102,6 +106,22 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.ViewHo
                 onItemClick(file);
             }
         });
+        holder.rlItem.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                //进入编辑模式
+                isEditMode = true;
+                notifyDataSetChanged();
+                return true;
+            }
+        });
+        if (isEditMode) {
+            mCheckArray.put(position, 1);
+            holder.cbCheck.setVisibility(View.VISIBLE);
+        } else {
+            mCheckArray.put(position, 0);
+            holder.cbCheck.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -189,6 +209,13 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.ViewHo
     }
 
     public boolean onBack() {
+        //退出编辑模式
+        if (isEditMode) {
+            isEditMode = false;
+            notifyDataSetChanged();
+            return true;
+        }
+
         File rootPath = Environment.getExternalStorageDirectory();
         if (mParentFile == null) {
             mActionBar.setDisplayHomeAsUpEnabled(false);
@@ -328,6 +355,7 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.ViewHo
         TextView tvFileName;
         TextView tvFileDesc;
         ImageView imgIcon;
+        CheckBox cbCheck;
         RelativeLayout rlItem;
 
         public ViewHolder(View view) {
@@ -335,6 +363,7 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.ViewHo
             tvFileName = view.findViewById(R.id.tvFileName);
             tvFileDesc = view.findViewById(R.id.tvFileDesc);
             imgIcon = view.findViewById(R.id.imgIcon);
+            cbCheck = view.findViewById(R.id.cbCheck);
             rlItem = view.findViewById(R.id.rlItem);
         }
 
