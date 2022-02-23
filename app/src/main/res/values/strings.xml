@@ -7,6 +7,12 @@
     <string name="title_profile">我的</string>
     <string name="title_about">关于</string>
     <string name="title_settings">设置</string>
+    <string name="nav_share">分享</string>
+    <string name="nav_copy">复制</string>
+    <string name="nav_move">移动</string>
+    <string name="nav_delete">删除</string>
+    <string name="nav_more">更多</string>
+    <string name="nav_rename">重命名</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
@@ -22,4 +28,5 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="title_activity_main2">MainActivity2</string>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/rlItem"
@@ -19,20 +19,32 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
+            android:layout_toLeftOf="@id/cbCheck"
             android:layout_toRightOf="@+id/imgIcon"
             android:ellipsize="middle"
             android:singleLine="true"
+            android:text="aaaa"
             android:textSize="20dp" />
 
         <TextView
             android:id="@+id/tvFileDesc"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_below="@+id/tvFileName"
+            android:layout_below="@id/tvFileName"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/imgIcon"
+            android:layout_toLeftOf="@id/cbCheck"
+            android:layout_toRightOf="@id/imgIcon"
+            android:text="aaaa"
             android:textColor="@color/black"
             android:textSize="15dp" />
+
+        <CheckBox
+            android:id="@+id/cbCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </RelativeLayout>

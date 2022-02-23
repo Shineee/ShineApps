@@ -1,13 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/lvFileList"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFileList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/black"
         android:dividerHeight="1dp"
         android:scrollbars="none" />
+
+    <LinearLayout
+        android:id="@+id/llBottomMenu"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/edit_bg"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_edit_share_24"
+            android:gravity="center"
+            android:text="@string/nav_share" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_edit_copy_24"
+            android:gravity="center"
+            android:text="@string/nav_copy" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_edit_move_24"
+            android:gravity="center"
+            android:text="@string/nav_move" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_edit_delete_24"
+            android:gravity="center"
+            android:text="@string/nav_delete" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_edit_more_vert_24"
+            android:gravity="center"
+            android:text="@string/nav_more" />
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvMyPhone"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/llBottomMenu"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/edit_bg"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:cardCornerRadius="5dp" android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="@string/nav_rename"
+            android:textSize="18dp" />
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>

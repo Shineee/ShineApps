@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/nav_share"
+        android:enabled="true"
+        android:icon="@drawable/ic_edit_share_24"
+        android:title="@string/nav_share"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/nav_copy"
+        android:icon="@drawable/ic_edit_copy_24"
+        android:title="@string/nav_copy"
+        android:enabled="true"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/nav_move"
+        android:icon="@drawable/ic_edit_move_24"
+        android:title="@string/nav_move"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/nav_delete"
+        android:icon="@drawable/ic_edit_delete_24"
+        android:title="@string/nav_delete"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/nav_rename"
+        android:title="@string/nav_rename"
+        app:showAsAction="ifRoom" />
+
+</menu>

@@ -1,44 +1,33 @@
 package com.shine.apps.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.shine.apps.R;
 import com.shine.apps.utils.L;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
-import java.nio.file.Files;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * <strong>文件夹列表适配器</strong>
  * <p>
- * 这里写类的详细描述
+ * 用于展示
  *
  * @author wangyang
  * @version 1.0
@@ -47,7 +36,7 @@ import java.util.List;
  * @since 4/20/21
  */
 
-public class FolderListAdapter extends BaseAdapter {
+public class FolderListAdapter extends RecyclerView.Adapter<FolderListAdapter.ViewHolder> {
     private static final String TAG = "FolderListAdapter";
     private Context mContext;
     private List<File> mFileList;
@@ -72,39 +61,19 @@ public class FolderListAdapter extends BaseAdapter {
         mFileList = fileList;
     }
 
-
+    @NonNull
+    @NotNull
     @Override
-    public int getCount() {
-        return mFileList != null ? mFileList.size() : 0;
+    public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_file, parent, false);
+        ViewHolder holder = new ViewHolder(view);
+        return holder;
     }
 
     @Override
-    public File getItem(int position) {
-        return mFileList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        FolderListAdapter.ViewHolder viewHolder;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_file, null);
-            viewHolder = new FolderListAdapter.ViewHolder();
-            viewHolder.tvFileName = convertView.findViewById(R.id.tvFileName);
-            viewHolder.tvFileDesc = convertView.findViewById(R.id.tvFileDesc);
-            viewHolder.imgIcon = convertView.findViewById(R.id.imgIcon);
-            viewHolder.rlItem = convertView.findViewById(R.id.rlItem);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (FolderListAdapter.ViewHolder) convertView.getTag();
-        }
-
+    public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         File file = mFileList.get(position);
-        viewHolder.tvFileName.setText(file.getName());
+        holder.tvFileName.setText(file.getName());
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String modified = sdf.format(file.lastModified());
@@ -112,12 +81,16 @@ public class FolderListAdapter extends BaseAdapter {
 
         if (file.isDirectory()) {
             desc = modified;//2021/03/39 07:08:09
-            viewHolder.imgIcon.setImageResource(R.mipmap.file_list);
-            viewHolder.tvFileDesc.setText(desc);
+            holder.imgIcon.setImageResource(R.mipmap.file_list);
+            holder.tvFileDesc.setText(desc);
         }
 
-
-        return convertView;
+        holder.rlItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClick(file);
+            }
+        });
     }
 
     public void onItemClick(File file) {
@@ -198,10 +171,25 @@ public class FolderListAdapter extends BaseAdapter {
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
-    private class ViewHolder {
+
+    @Override
+    public int getItemCount() {
+        return mFileList != null ? mFileList.size() : 0;
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvFileName;
         TextView tvFileDesc;
         ImageView imgIcon;
         RelativeLayout rlItem;
+
+        public ViewHolder(View view) {
+            super(view);
+            tvFileName = view.findViewById(R.id.tvFileName);
+            tvFileDesc = view.findViewById(R.id.tvFileDesc);
+            imgIcon = view.findViewById(R.id.imgIcon);
+            rlItem = view.findViewById(R.id.rlItem);
+        }
+
     }
 }
