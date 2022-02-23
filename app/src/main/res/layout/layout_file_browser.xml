@@ -71,9 +71,8 @@
         android:layout_marginBottom="10dp"
         android:background="@color/edit_bg"
         android:paddingLeft="10dp"
-
         android:paddingRight="10dp"
-        app:cardCornerRadius="5dp">
+        app:cardCornerRadius="5dp" android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"

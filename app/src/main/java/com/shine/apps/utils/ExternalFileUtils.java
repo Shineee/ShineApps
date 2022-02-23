@@ -25,9 +25,11 @@ public class ExternalFileUtils {
         File externalPath = Environment.getExternalStorageDirectory();//  /storage/emulated/0
         if (externalPath == null) {
             Log.e("ExternalFileUtils", "getExternalPath() externalPath=null");
+            return null;
         }
         if (externalPath.listFiles() == null) {
             Log.e("ExternalFileUtils", "getExternalPath() externalPath.listFiles=null");
+            return null;
         }
         List<File> fileList;
         boolean showFile = SharedPreferenceUtils.getInstance().getBoolean("showFile");
@@ -50,9 +52,11 @@ public class ExternalFileUtils {
         File externalPath = Environment.getExternalStorageDirectory();//  /storage/emulated/0
         if (externalPath == null) {
             Log.e("ExternalFileUtils", "getExternalPath() externalPath=null");
+            return null;
         }
         if (externalPath.listFiles() == null) {
             Log.e("ExternalFileUtils", "getExternalPath() externalPath.listFiles=null");
+            return null;
         }
         List<File> folderList = new ArrayList<>();
         for (File file : externalPath.listFiles()) {
